@@ -4,7 +4,7 @@ import axios from "axios"
 const App = () => {
 
   const [countryNames, setCountryNames] = useState([])
-
+  const [currentInput, setCurrentInput] = useState("")
   const allCountriesNames = []
 
 
@@ -19,6 +19,12 @@ const App = () => {
     })
     setCountryNames(allCountriesNames)
   }
+
+  const handleInput = (event) => {
+    setCurrentInput(event.target.value)
+  }
+
+  const countriesToShow = countryNames.filter(country => country.toLowerCase().includes(currentInput.toLowerCase()))
   
   //To do: 
   //Implement searching
@@ -26,12 +32,11 @@ const App = () => {
   //Display relevant information about it
   return (
     <div>
-      <form>
-        find countries <input />
-      </form>
+      <h1>Search for countries:</h1>
+      <input value={currentInput} onChange = {handleInput}/>
       <h1>Countries: </h1>
       <div>
-        {countryNames.map(name => <p key={name}>{name}</p>)}
+        {countriesToShow.map(name => <p key={name}>{name}</p>)}
       </div>
     </div>
   )
